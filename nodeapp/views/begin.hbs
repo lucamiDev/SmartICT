@@ -1,0 +1,261 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Domov</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Merjenje</li>
+  </ol>
+</nav>
+
+{{!-- Styling --}}
+<style>
+  #bottom {
+    padding-top: 50px;
+  }
+
+  
+  button {
+      background-color: #0F4D92;
+      border: none;
+      color: white;
+      padding: 5px 30px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 15px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+#button5 {
+  background-color: #FF6F61;
+
+}
+
+#button4 {
+  background-color: #cfcf24;
+
+}
+#button2 {
+  background-color: #FFA07A;
+
+}
+
+
+#graphs {
+    margin-top: -60px;
+}
+
+ .alert{
+  height: 600px;
+  width: 200px;
+  background-color: rgb(255, 1, 1); /* Red background */
+  position: fixed;
+  top:92px;
+  right: 20px;
+  display: none;
+}
+
+
+</style>
+
+
+{{!-- This is to handle buttons for the states --}}
+<script>
+function getUnique_id(buttonId) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("POST", "/unique_id", true);
+  xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhttp.send(JSON.stringify({ buttonId: buttonId})); 
+  console.log("Button clicked! - Unique_id");
+}
+
+
+// Button for states 
+function generateTimestamp(buttonId) {
+  // console.log("Button clicked!"); 
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("POST", "/timestamp", true);
+  xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhttp.send(JSON.stringify({ buttonId: buttonId })); 
+  console.log("Button clicked! - State");
+
+}
+
+
+function generateEmotionAndButton(emotion) {
+    generateEmotion(emotion); // Call the generateEmotion function with the provided emotion
+    handleButtonClick(); // Call the handleButtonClick function
+}
+
+
+// Button for emotions
+function generateEmotion(buttonId) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("POST", "/emotion", true);
+  xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhttp.send(JSON.stringify({ buttonId: buttonId })); 
+  console.log("Button clicked! - Emotion");
+}
+
+
+
+function close_python(buttonId) {
+  console.log("tukaj sprejmemo")
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("POST", "/close", true);
+  xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhttp.send(JSON.stringify({ buttonId: buttonId }));  
+  console.log("Python closed!");
+}
+
+
+// Button for getting data
+function awsCall(buttonId) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("POST", "/aws", true);
+  xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhttp.send(JSON.stringify({ buttonId: buttonId })); 
+  console.log("Button clicked! - Emotion");
+}
+
+// Button for starting matanks
+function imlCall(buttonId) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("POST", "/influx", true);
+  xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhttp.send(JSON.stringify({ buttonId: buttonId })); 
+  console.log("Button clicked! - Emotion");
+}
+
+
+// Function to show the blinking div and keep it visible until the button is pressed
+function showBlinkingDiv() {
+    var blinkingDiv = document.querySelector('.alert');
+    blinkingDiv.style.display = 'block'; // Show the div
+    
+    // Check if button is not clicked
+    if (!buttonClicked) {
+        return; // If button is not clicked, do not hide the div
+    }
+}
+
+// Function to handle button click
+function handleButtonClick() {
+    buttonClicked = true; // Set buttonClicked to true when button is clicked
+    var blinkingDiv = document.querySelector('.alert');
+    blinkingDiv.style.display = 'none'; // Hide the blinking div
+}
+
+// Global variable to track button click
+var buttonClicked = false;
+
+// Set interval to show blinking div every 5 minutes
+setInterval(showBlinkingDiv, 300000); // 5 minutes
+</script>
+
+<div class="alert" id="redLight"></div>
+
+
+
+
+<div class="view-user p-5">
+  {{#each rows}}
+    <add name="X-Frame-Options" value="SAMEORIGIN" />
+    {{!-- SENSOR DATA GRAPHS --}}
+    <div class="row" id="graphs">
+      <div class="col" style=(padding-top: 50px;)>
+        {{!-- <iframe src="http://localhost:3000/d-solo/pmkQAXBVz/matanks?orgId=1&refresh=5s&from=1680163067596&to=1680163967597&panelId=2" width="450" height="200" frameborder="0"></iframe> --}}
+        {{!-- <iframe src="http://localhost:3000/d-solo/DG5tFZ-4k/new-dashboard?orgId=1&refresh=1s&panelId=8&from=now-15m&to=now" width="570" height="200" frameborder="0"></iframe> --}}
+        <iframe src="http://localhost:3000/d-solo/d554cdb0-1da9-4e31-80e1-fde7e368f3b1/matanks?orgId=1&refresh=5s&panelId=1&from=now-15m&to=now" width="550" height="350" frameborder="0"></iframe>
+        {{!-- <iframe src="http://localhost:3000/d-solo/DG5tFZ-4k/new-dashboard?orgId=1&refresh=1s&&panelId=10&from=now-15m&to=now" width="550" height="250" frameborder="0"></iframe> --}}
+      </div>
+
+
+      {{!-- Temperature --}}
+       <div class="col" style=(padding-top: 50px;)>
+        <iframe src="http://localhost:3000/d-solo/d554cdb0-1da9-4e31-80e1-fde7e368f3b1/matanks?orgId=1&refresh=5s&panelId=4&from=now-15m&to=now" width="550" height="350" frameborder="0"></iframe>
+        {{!-- <iframe src="http://localhost:3000/d-solo/pmkQAXBVz/matanks?orgId=1&refresh=1s&panelId=4&from=now-55m&to=now" width="550" height="250" frameborder="0"></iframe> --}}
+        {{!-- <iframe src="http://localhost:3000/d-solo/DG5tFZ-4k/new-dashboard?orgId=1&refresh=1s&panelId=6&from=now-15m&to=now" width="570" height="200" frameborder="0"></iframe> --}}
+        
+      </div>
+
+      {{!-- Raspitory rate --}}
+       <div class="col" style=(padding-top: 50px;)>
+        {{!-- <iframe src="http://localhost:3000/d-solo/pmkQAXBVz/matanks?orgId=1&refresh=1s&panelId=6&from=now-5m&to=now" width="550" height="250" frameborder="0"></iframe> --}}
+        <iframe src="http://localhost:3000/d-solo/d554cdb0-1da9-4e31-80e1-fde7e368f3b1/matanks?orgId=1&refresh=5s&panelId=2&from=now-15m&to=now" width="550" height="200" frameborder="0"></iframe>
+        {{!-- <iframe src="http://localhost:3000/d-solo/DG5tFZ-4k/new-dashboard?orgId=1&refresh=1s&panelId=4&from=now-15m&to=now" width="570" height="200" frameborder="0"></iframe> --}}
+        {{!-- <iframe src="http://localhost:3000/d-solo/UgzIlsc4z/test3?orgId=1&theme=light&&refresh=1s&panelId=4&from=now-15m&to=now" width="450" height="200" frameborder="0"></iframe> --}}
+      </div>
+
+      {{!-- EDA --}}
+       <div class="col" style=(padding-top: 50px;)>
+        {{!-- <iframe src="http://localhost:3000/d-solo/DG5tFZ-4k/new-dashboard?orgId=1&refresh=1s&panelId=2&from=now-15m&to=now" width="570" height="200" frameborder="0"></iframe> --}}
+        {{!-- <iframe src="http://localhost:3000/d-solo/UgzIlsc4z/test3?orgId=1&theme=light&&refresh=1s&panelId=4&from=now-15m&to=now" width="450" height="200" frameborder="0"></iframe> --}}
+        
+        <iframe src="http://localhost:3000/d-solo/d554cdb0-1da9-4e31-80e1-fde7e368f3b1/matanks?orgId=1&refresh=5s&panelId=3&from=now-15m&to=now" width="550" height="200" frameborder="0"></iframe>
+      </div>
+    </div>
+
+
+  
+  {{!-- This row is for USER DATA and BUTTONS --}}
+  <div class="container">
+      <div class="row">
+
+        {{!-- Id number --}}
+        <div class="col-md-2">
+              <th scope="col">Id številka:  <strong>{{this.unique_id}}</strong></th>
+        </div>
+
+        <div class="col-md-10">
+               <div class="row">
+                    {{!-- This button is to show emotions --}}
+                    <div class="col">
+                      <a>Termometer: </a>
+              
+                      <button id="buttonE1" onclick="generateEmotionAndButton(1)"> 1</button>
+                      <button id="buttonE1" onclick="generateEmotionAndButton(2)"> 2</button>
+                      <button id="buttonE1" onclick="generateEmotionAndButton(3)"> 3</button>
+                      <button id="buttonE1" onclick="generateEmotionAndButton(4)"> 4</button>
+                      <button id="buttonE1" onclick="generateEmotionAndButton(5)"> 5</button>
+                      <button id="buttonE1" onclick="generateEmotionAndButton(6)"> 6</button>
+                      <button id="buttonE1" onclick="generateEmotionAndButton(7)"> 7</button>
+                      <button id="buttonE1" onclick="generateEmotionAndButton(8)"> 8</button>
+                      <button id="buttonE1" onclick="generateEmotionAndButton(9)"> 9</button>
+                      <button id="buttonE1" onclick="generateEmotionAndButton(10)">10</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                      <a>Faza testiranja: </a>
+                      <button id="button2" onclick="generateTimestamp(1)">1. Navodila</button>
+                      <button id="button2" onclick="generateTimestamp(2)">2: Začetek merjenja</button>
+                      <button id="button2" onclick="generateTimestamp(3)">3: Zaključek</button>
+                      <button id="button4" onclick="generateTimestamp(4)"> Releksacija</button>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                      {{!-- <button id="button6" onclick="close_python(1)"> Releksacija</button> --}}
+                      <a class="nav-link active" aria-current="page" href="/" onclick="close_python(1)">Končaj merjenje in izključi senzorje</a> 
+                    </div>
+                </div>
+        </div>
+      </div>
+
+  </div>
+    
+
+        
+
+    </div>
+  {{/each}}
+</div>
+
+
+<script>
+
+</script>

@@ -1,0 +1,47 @@
+{{#if removedUser}}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  Uporabnik je bil izbrisan
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{{/if}}
+
+<div class="row">
+  <div class="col-6">
+    <h1>Obstoječi uporabniki</h1>
+  </div>
+  <div class="col-6 d-flex justify-content-end">
+    <a href="/adduser" type="button" class="btn btn-primary align-self-center">+ dodaj uporabnika</a>
+  </div>
+</div>
+
+<table class="table table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Id številka</th>
+      {{!-- <th scope="col">Ime</th>
+      <th scope="col">Priimek</th> --}}
+      <th scope="col" class="text-end">Akcije</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    {{#each rows}}
+    <tr>
+      <th scope="row">{{this.id}}</th>
+      <td>{{this.unique_id}}</td>
+      {{!-- <td>{{this.name}}</td>
+      <td>{{this.surname}}</td>
+      --}}
+      <td class="text-end">
+        <a href="/begin/{{this.id}}" type="button" class="btn btn-dark btn-small">MERJENJE</a>
+         {{!-- <a>Uredi uporabnika: </a>
+        <a href="/viewuser/{{this.id}}" type="button" class="btn btn-light btn-small"><i class="bi bi-eye"></i> Pregled</a>
+        <a href="/edituser/{{this.id}}" type="button" class="btn btn-light btn-small"><i class="bi bi-pencil"></i>Uredi</a>  --}}
+        <a href="/{{this.id}}" type="button" class="btn btn-light btn-small"><i class="bi bi-person-x"></i> Izbriši</a> 
+      </td>
+    </tr>
+    {{/each}}
+
+  </tbody>
+</table>

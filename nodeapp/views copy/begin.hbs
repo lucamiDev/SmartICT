@@ -1,0 +1,72 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">View User</li>
+  </ol>
+</nav>
+
+<div class="view-user p-5">
+  {{#each rows}}
+
+  <div class="row">
+    
+    <div class="col">
+      
+ 
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="row">First Name</th>
+            <th scope="row">{{this.first_name}}</th>
+            
+          </tr>
+          <tr>
+            <th scope="row">Last Name</th>
+            <td>{{this.last_name}}</td>
+            
+          </tr>
+          <tr>
+            <th scope="row">Email</th>
+            <td>{{this.email}}</td>
+            
+          </tr>
+          <tr>
+            <th scope="row">Phone</th>
+             <td>{{this.phone}}</td>
+          </tr>
+        </thead>
+        
+      </table>
+      <a href="/begin/:id/influx" type="button" class="btn btn-light btn-small"><i class="bi-eyeglasses"></i> Start</a>
+      <a href="/begin/:id/aws" type="button" class="btn btn-light btn-small"><i class="bi-eyeglasses"></i> GetData</a>
+
+    
+    </script> 
+
+      <div><p>  {{ code}}</p></div>
+      </div>
+
+      
+      <div class="col">
+        <iframe src="http://localhost:3000/d-solo/UgzIlsc4z/test3?orgId=1&theme=light&refresh=1s&panelId=2&from=now-15m&to=now" width="450" height="200" frameborder="0"></iframe>
+      </div>
+      
+      <div class="col">
+        <iframe src="http://localhost:3000/d-solo/UgzIlsc4z/test3?orgId=1&theme=light&&refresh=1s&panelId=4&from=now-15m&to=now" width="450" height="200" frameborder="0"></iframe>
+      </div>
+
+      <div class = "col">
+      <p>CHOOSE THE PHASE OF THE EXAM:</p>
+      {{!-- <a type="button" class="btn btn-light btn-small" onclick="time1()"><i></i> 1</a> --}}
+      <a href="/begin/time2" type="button" class="btn btn-light btn-small"><i></i> 2</a>
+      <a href="/begin/data" type="button" class="btn btn-light btn-small"><i></i> Get data</a>
+      
+          
+    
+      </div>
+        {{!-- <iframe src="http://localhost:3000/d-solo/fnluvSHVz/test2?orgId=1&refresh=1s&panelId=2&from=now-15m&to=now" width="1000px" height="800px" frameborder="0"></iframe> --}}
+  </div>
+  {{/each}}
+</div>
+
+

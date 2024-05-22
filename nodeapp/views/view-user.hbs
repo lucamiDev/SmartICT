@@ -1,0 +1,36 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Domov</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Pregled podatkov uporabnika</li>
+  </ol>
+</nav>
+
+<div class="view-user p-5">
+  {{#each rows}}
+  <div class="row mb-5">
+    <div class="col text-center">
+      <h3>{{this.first_name}} {{this.last_name}}</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Id številka</th>
+            {{!-- <th scope="col">Ime</th>
+            <th scope="col">Priimek</th> --}}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">{{this.unique_id}}</th>
+            {{!-- <td>{{this.name}}</td>
+            <td>{{this.surname}}</td> --}}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {{/each}}
+</div>
